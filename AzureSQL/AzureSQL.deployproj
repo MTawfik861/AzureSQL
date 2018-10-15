@@ -28,8 +28,9 @@
     </None>
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <None Include="Elastic.json" />
-    <None Include="TemplateParametersFile_MI.json" />
+    <None Include="MI.parameters.json" />
     <None Include="MI.json" />
+    <None Include="Single.parameters.json" />
     <None Include="Single.json" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />

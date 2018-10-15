@@ -18,9 +18,6 @@ Param(
 
  
 Set-Location -Path $Path
-$OptionalParameters = New-Object -TypeName Hashtable
-$TemplateFile = $Path + '\' + $TemplateFile
-$TemplateParametersFile = $Path + '\' + $TemplateParametersFile
 
 $ErrorView = "NormalView" 
 $ErrorActionPreference = 'Stop'
@@ -44,27 +41,28 @@ else
 {
     # ResourceGroup exist
 }
+
 if ($Solution_Type -eq 'Single')
 {
-New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile_Single).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                    -ResourceGroupName $ResourceGroupName `
                                    -TemplateFile $TemplateFile_Single `
                                    -TemplateParameterFile $TemplateParametersFile_Single `
                                    -Force -Verbose `
                                    -ErrorVariable ErrorMessages
 }
-else	if ($Solution_Type -eq 'MI')
+elseif ($Solution_Type -eq 'MI')
 {
-New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile_MI).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                    -ResourceGroupName $ResourceGroupName `
                                    -TemplateFile $TemplateFile_MI `
                                    -TemplateParameterFile $TemplateParametersFile_MI `
                                    -Force -Verbose `
                                    -ErrorVariable ErrorMessages
 }
-else if ($Solution_Type -eq 'Elastic')
+elseif ($Solution_Type -eq 'Elastic')
 {
-New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile_Elastic).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                                    -ResourceGroupName $ResourceGroupName `
                                    -TemplateFile $TemplateFile_Elastic `
                                    -TemplateParameterFile $TemplateParametersFile_Elastic `
@@ -72,7 +70,9 @@ New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName
                                    -ErrorVariable ErrorMessages
 }
 
-else {#Solution Type selected is not valid}
+else {#Solution Type selected is not valid 
+ }
+
  if ($ErrorMessages) {
         Write-Output '', 'Template deployment returned the following errors:', @(@($ErrorMessages) | ForEach-Object { $_.Exception.Message.TrimEnd("`r`n") })
     }

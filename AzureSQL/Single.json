@@ -9,16 +9,16 @@
     "sqlserverAdminLoginPassword": {
       "type": "securestring"
     },
-    "sqldbName": {
+    "sqldatabaseName": {
       "type": "string",
       "minLength": 1
     },
-    "sqldbCollation": {
+    "sqldatabaseCollation": {
       "type": "string",
       "minLength": 1,
       "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
     },
-    "sqldbEdition": {
+    "sqldatabaseEdition": {
       "type": "string",
       "defaultValue": "Basic",
       "allowedValues": [
@@ -27,7 +27,7 @@
         "Premium"
       ]
     },
-    "sqldbRequestedServiceObjectiveName": {
+    "sqldatabaseRequestedServiceObjectiveName": {
       "type": "string",
       "defaultValue": "Basic",
       "allowedValues": [
@@ -74,7 +74,7 @@
           }
         },
         {
-          "name": "[parameters('sqldbName')]",
+          "name": "[parameters('sqldatabaseName')]",
           "type": "databases",
           "location": "[resourceGroup().location]",
           "apiVersion": "2014-04-01-preview",
@@ -82,13 +82,13 @@
             "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
           ],
           "tags": {
-            "displayName": "sqldb"
+            "displayName": "sqldatabase"
           },
           "properties": {
-            "collation": "[parameters('sqldbCollation')]",
-            "edition": "[parameters('sqldbEdition')]",
+            "collation": "[parameters('sqldatabaseCollation')]",
+            "edition": "[parameters('sqldatabaseEdition')]",
             "maxSizeBytes": "1073741824",
-            "requestedServiceObjectiveName": "[parameters('sqldbRequestedServiceObjectiveName')]"
+            "requestedServiceObjectiveName": "[parameters('sqldatabaseRequestedServiceObjectiveName')]"
           }
         }
       ]
