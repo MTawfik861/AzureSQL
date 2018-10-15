@@ -10,7 +10,9 @@ Param(
     [string] $TenantId  = '20349a5c-df19-401c-8e6c-bade0c468dd9',
     [string] [Parameter(Mandatory=$True)] $ResourceGroupLocation,
     [string] $ResourceGroupName = 'AzureSQLResourceGroup',
-    [string] $TemplateFile = 'azuredeploy.json',
+    [string] $TemplateFile_Single = 'Single.json',
+	[string] $TemplateFile_MI = 'MI.json',
+	[string] $TemplateFile_Elastic = 'Elastic.json',
     [string] $TemplateParametersFile = 'azuredeploy.parameters.json',
     [string] $StorageAccountName= 'stage' + $SubscriptionId.Replace('-', '').substring(0, 19),
     [string] $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts')
