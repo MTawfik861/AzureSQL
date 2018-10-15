@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "_artifactsLocation": {
+      "type": "string"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring"
+    },
+    "_type": {
+
+      "allowedValues": [ "MI", "Single", "Elastic" ],
+      "type": "string"
+    }
+  },
+  "variables": {
+    "MITemplateFolder": "nestedtemplates",
+    "MITemplateFileName": "MI.json",
+    "MITemplateParametersFileName": "MI.parameters.json",
+    "SingleTemplateFolder": "nestedtemplates",
+    "SingleTemplateFileName": "Single.json",
+    "SingleTemplateParametersFileName": "Single.parameters.json",
+    "ElasticTemplateFolder": "nestedtemplates",
+    "ElasticTemplateFileName": "Elastic.json",
+    "ElasticTemplateParametersFileName": "Elastic.parameters.json"
+  },
+  "resources": [
+    {
+      "condition": "[equals(parameters('_type'), 'MI')]",
+      "name": "MI",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('MITemplateFolder'), '/', variables('MITemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('MITemplateFolder'), '/', variables('MITemplateParametersFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('_type'), 'Single')]",
+      "name": "Single",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('SingleTemplateFolder'), '/', variables('SingleTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('SingleTemplateFolder'), '/', variables('SingleTemplateParametersFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('_type'), 'Elastic')]",
+      "name": "Elastic",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('ElasticTemplateFolder'), '/', variables('ElasticTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('ElasticTemplateFolder'), '/', variables('ElasticTemplateParametersFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
