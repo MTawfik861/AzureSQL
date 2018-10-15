@@ -70,7 +70,7 @@
     },
     "vCores": {
       "type": "int",
-      "defaultValue": 16,
+      "defaultValue": 8,
       "allowedValues": [
         8,
         16,
