@@ -29,9 +29,9 @@
       <Visible>False</Visible>
     </None>
     <Content Include="Deploy-AzureResourceGroup.ps1" />
-    <None Include="nestedtemplates\Elastic.json" />
-    <None Include="nestedtemplates\MI.json" />
-    <None Include="nestedtemplates\Single.json" />
+    <None Include="Elastic.json" />
+    <None Include="MI.json" />
+    <None Include="Single.json" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
