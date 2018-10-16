@@ -7,14 +7,17 @@ Param(
     [string] $SubscriptionId = 'd66f13b7-4a33-4d7c-9d5c-f7b2650d5236',
     [string] $TenantId  = '20349a5c-df19-401c-8e6c-bade0c468dd9',
     [string] $ResourceGroupLocation = 'West Europe',
-    [string] $ResourceGroupName = 'AzureSQLResourceGroup5',
-    [string] $TemplateFile_Single = 'Single.json',
+    [string] $ResourceGroupName = 'AzureSQLResourceGroup741',
+    [string] $TemplateFile_Single_DTU = 'Single.DTU.json',
+    [string] $TemplateFile_Single_vCore = 'Single.vCore.json',
 	[string] $TemplateFile_MI = 'MI.json',
 	[string] $TemplateFile_Elastic = 'Elastic.json',
-    [string] $TemplateParametersFile_Single = 'Single.parameters.json',
+    [string] $TemplateParametersFile_Single_DTU = 'Single.DTU.parameters.json',
+        [string] $TemplateParametersFile_Single_vCore = 'Single.vCore.parameters.json',
 	[string] $TemplateParametersFile_MI = 'MI.parameters.json',
 	[string] $TemplateParametersFile_Elastic = 'Elastic.parameters.json',
-	[string][Parameter(Mandatory=$True)][ValidateSet("Single","MI","Elastic")]  $Solution_Type)
+	[string] [Parameter(Mandatory=$True)][ValidateSet("Single","MI","Elastic")]  $Solution_Type,
+    [string] [ValidateSet("DTU","vCore")]  $Model= "")
 
  
 Set-Location -Path $Path
@@ -53,12 +56,31 @@ else
 
 if ($Solution_Type -eq 'Single')
 {
-New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile_Single).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
-                                   -ResourceGroupName $ResourceGroupName `
-                                   -TemplateFile $TemplateFile_Single `
-                                   -TemplateParameterFile $TemplateParametersFile_Single `
-                                   -Force -Verbose `
-                                   -ErrorVariable ErrorMessages
+
+$Model = Read-Host -Prompt 'Input your Model'
+
+Write-Host "You input server '$Model' " 
+    
+    if ($Model -eq 'DTU')
+    {   
+    
+     New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile_Single_DTU).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+                                       -ResourceGroupName $ResourceGroupName `
+                                       -TemplateFile $TemplateFile_Single_DTU `
+                                       -TemplateParameterFile $TemplateParametersFile_Single `
+                                       -Force -Verbose `
+                                       -ErrorVariable ErrorMessages  }
+ 
+     elseif ($Model -eq 'vCore')   
+     {   New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile_Single_vCore).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+                                       -ResourceGroupName $ResourceGroupName `
+                                       -TemplateFile $TemplateFile_Single `
+                                       -TemplateParameterFile $TemplateParametersFile_vCore `
+                                       -Force -Verbose `
+                                       -ErrorVariable ErrorMessages}    
+    else
+    {#not valid model}                           
+}
 }
 elseif ($Solution_Type -eq 'MI')
 {

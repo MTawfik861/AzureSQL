@@ -31,8 +31,10 @@
     <None Include="Elastic.json" />
     <None Include="MI.parameters.json" />
     <None Include="MI.json" />
-    <None Include="Single.parameters.json" />
-    <None Include="Single.json" />
+    <None Include="Single.vCore.parameters.json" />
+    <None Include="Single.DTU.json" />
+    <None Include="Single.DTU.parameters.json" />
+    <None Include="Single.vCore.json" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

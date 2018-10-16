@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "servers_sqlserverss_name": {
-      "value": "sqlserver21321"
+      "value": "sqlserverss6e"
     },
     "servers_sqlserverss_password": {
       "value": "Password12345K"
@@ -12,8 +12,10 @@
       "value": "mtawfik"
     },
     "databases_sqldatabase_name": {
-      "value": "sqlserverdb"
+      "value": "sqldb"
+    },
+    "Model": {
+      "value": "vCore"
     }
-
   }
 }

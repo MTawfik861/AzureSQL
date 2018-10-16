@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+
+    "servers_sqlserverss_name": {
+      "type": "string"
+    },
+    "servers_sqlserverss_password": {
+      "type": "securestring"
+    },
+    "servers_sqlserverss_admin": {
+      "type": "String"
+    },
+    "databases_sqldatabase_name": {
+      "type": "String"
+    },
+    "Model": {
+      "type": "string",
+      "allowedValues": [ "DTU", "vCore" ],
+      "metadata": { "description": "DTU or vCore" }
+    }
+  },
+  "variables": {
+    "Kind_DTU": "v12.0,user",
+    "Kind_vCore": "v12.0,user,vcore",
+    "SKU_DTU": {
+      "name": "Basic",
+      "tier": "Basic"
+    },
+    "SKU_vCore": {
+      "name": "GP_Gen4_4",
+      "tier": "GeneralPurpose"
+    },
+    "Properties_DTU": {
+      "collation": "SQL_Latin1_General_CP1_CI_AS",
+      "maxSizeBytes": 104857600,
+      "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+      "zoneRedundant": false
+    },
+    "Properties_vCore": {
+      "collation": "SQL_Latin1_General_CP1_CI_AS",
+      "maxSizeBytes": 5368709120,
+      "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+      "zoneRedundant": false
+    }
+  },
+
+  "resources": [
+         {
+      "type": "Microsoft.Sql/servers",
+      "kind": "v12.0",
+      "name": "[parameters('servers_sqlserverss_name')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+        "administratorLogin": "[parameters('servers_sqlserverss_admin')]",
+        "administratorLoginPassword": "[parameters('servers_sqlserverss_password')]",
+        "version": "12.0"
+      },
+      "dependsOn": []
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "sku": "[if(equals(parameters('Model'), 'DTU'), variables('SKU_DTU'), variables('SKU_vCore'))]",
+      "kind": "[if(equals(parameters('Model'), 'DTU'), variables('Kind_DTU'), variables('Kind_vCore'))]",
+      "name": "[concat(parameters('servers_sqlserverss_name'), '/', parameters('databases_sqldatabase_name'))]",
+      "apiVersion": "2017-03-01-preview",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": "[if(equals(parameters('Model'), 'DTU'), variables('Properties_DTU'), variables('Properties_vCore'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', parameters('servers_sqlserverss_name'))]"
+      ]
+    }
+  ]
+}
+ 

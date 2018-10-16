@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "servers_sqlserverss_name": {
+      "value": "sqlserverss6e"
+    },
+    "servers_sqlserverss_password": {
+      "value": "Password12345K"
+    },
+    "servers_sqlserverss_admin": {
+      "value": "mtawfik"
+    },
+    "databases_sqldatabase_name": {
+      "value": "sqldb"
+    },
+    "Model": {
+      "value": "vCore"
+    }
+  }
+}

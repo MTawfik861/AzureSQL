@@ -1,125 +1,133 @@
 ﻿{
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "sqlserverAdminLogin": {
-      "type": "string",
-      "minLength": 1
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "servers_sqlserverss6e_name": {
+            "defaultValue": "sqlserverss6e",
+            "type": "String"
+        },
+        "databases_sqldb_name": {
+            "defaultValue": "sqldb",
+            "type": "String"
+        },
+        "advisors_DropIndex_name": {
+            "defaultValue": "DropIndex",
+            "type": "String"
+        },
+        "keys_ServiceManaged_name": {
+            "defaultValue": "ServiceManaged",
+            "type": "String"
+        },
+        "advisors_CreateIndex_name": {
+            "defaultValue": "CreateIndex",
+            "type": "String"
+        },
+        "advisors_DefragmentIndex_name": {
+            "defaultValue": "DefragmentIndex",
+            "type": "String"
+        },
+        "auditingPolicies_Default_name": {
+            "defaultValue": "Default",
+            "type": "String"
+        },
+        "advisors_ForceLastGoodPlan_name": {
+            "defaultValue": "ForceLastGoodPlan",
+            "type": "String"
+        },
+        "advisors_DbParameterization_name": {
+            "defaultValue": "DbParameterization",
+            "type": "String"
+        },
+        "encryptionProtector_current_name": {
+            "defaultValue": "current",
+            "type": "String"
+        },
+        "advisors_DropIndex_name_1": {
+            "defaultValue": "DropIndex",
+            "type": "String"
+        },
+        "advisors_CreateIndex_name_1": {
+            "defaultValue": "CreateIndex",
+            "type": "String"
+        },
+        "advisors_DefragmentIndex_name_1": {
+            "defaultValue": "DefragmentIndex",
+            "type": "String"
+        },
+        "auditingPolicies_Default_name_1": {
+            "defaultValue": "Default",
+            "type": "String"
+        },
+        "auditingPolicies_Default_name_2": {
+            "defaultValue": "Default",
+            "type": "String"
+        },
+        "databases_master_name": {
+            "defaultValue": "master",
+            "type": "String"
+        },
+        "geoBackupPolicies_Default_name": {
+            "defaultValue": "Default",
+            "type": "String"
+        },
+        "geoBackupPolicies_Default_name_1": {
+            "defaultValue": "Default",
+            "type": "String"
+        },
+        "advisors_ForceLastGoodPlan_name_1": {
+            "defaultValue": "ForceLastGoodPlan",
+            "type": "String"
+        },
+        "advisors_DbParameterization_name_1": {
+            "defaultValue": "DbParameterization",
+            "type": "String"
+        },
+        "transparentDataEncryption_current_name": {
+            "defaultValue": "current",
+            "type": "String"
+        },
+        "transparentDataEncryption_current_name_1": {
+            "defaultValue": "current",
+            "type": "String"
+        }
     },
-    "sqlserverAdminLoginPassword": {
-      "type": "securestring"
-    },
-    "sqldatabaseName": {
-      "type": "string",
-      "minLength": 1
-    },
-    "sqldatabaseCollation": {
-      "type": "string",
-      "minLength": 1,
-      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
-    },
-
-    "Model": {
-      "type": "string",
-      "defaultValue": "DTU",
-      "allowedValues": [ "DTU", "vCore" ],
-      "metadata": {
-        "description": "DTU or vCore"
-      }
-
-    }
-
-  },
-  "variables": {
-    "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]",
-    "DTU": {
-      "name": "GP_Gen4",
-      "tier": "GeneralPurpose",
-      "family": "Gen4",
-      "capacity": 1
-    },
-    "vCore": {
-      "name": "Basic",
-      "tier": "Basic",
-      "capacity": 5
-    }
-
-  },
-  "resources": [
-    {
-      "name": "[variables('sqlserverName')]",
-      "type": "Microsoft.Sql/servers",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "2014-04-01-preview",
-      "dependsOn": [],
-      "tags": {
-        "displayName": "sqlserver"
-      },
-      "properties": {
-        "administratorLogin": "[parameters('sqlserverAdminLogin')]",
-        "administratorLoginPassword": "[parameters('sqlserverAdminLoginPassword')]"
-      },
-      "resources": [
+    "variables": {},
+    "resources": [
         {
-          "name": "AllowAllWindowsAzureIps",
-          "type": "firewallrules",
-          "location": "[resourceGroup().location]",
-          "apiVersion": "2014-04-01-preview",
-          "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
-          ],
-          "properties": {
-            "startIpAddress": "0.0.0.0",
-            "endIpAddress": "0.0.0.0"
-          }
+            "comments": "Generalized from resource: '/subscriptions/d66f13b7-4a33-4d7c-9d5c-f7b2650d5236/resourceGroups/AzureSQLResourceGroupsd/providers/Microsoft.Sql/servers/sqlserverss6e'.",
+            "type": "Microsoft.Sql/servers",
+            "kind": "v12.0",
+            "name": "[parameters('servers_sqlserverss6e_name')]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "westeurope",
+            "scale": null,
+            "properties": {
+                "administratorLogin": "mtawfik",
+                "version": "12.0"
+            },
+            "dependsOn": []
         },
         {
-          "name": "[parameters('sqldatabaseName')]",
-          "type": "databases",
-          "location": "[resourceGroup().location]",
-          "apiVersion": "2014-04-01-preview",
-          "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
-          ],
-          "tags": {
-            "displayName": "sqldatabase"
-          },
-          "properties": {
-            "collation": "[parameters('sqldatabaseCollation')]",
-            "sku": "[if(equals(parameters('Model'), 'DTU'), variables('DTU'), variables('vCore'))]"
-          }
+            "comments": "Generalized from resource: '/subscriptions/d66f13b7-4a33-4d7c-9d5c-f7b2650d5236/resourceGroups/AzureSQLResourceGroupsd/providers/Microsoft.Sql/servers/sqlserverss6e/databases/sqldb'.",
+            "type": "Microsoft.Sql/servers/databases",
+            "sku": {
+                "name": "GP_Gen4_1",
+                "tier": "GeneralPurpose"
+            },
+            "kind": "v12.0,user,vcore",
+            "name": "[concat(parameters('servers_sqlserverss6e_name'), '/', parameters('databases_sqldb_name'))]",
+            "apiVersion": "2017-03-01-preview",
+            "location": "westeurope",
+            "scale": null,
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 5368709120,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+                "zoneRedundant": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_sqlserverss6e_name'))]"
+            ]
         }
-      ]
-    }
-  ],
-  "outputs": {}
-}  
-
-
-     {
-          "name": "[parameters('sqldatabaseName')]",
-          "type": "databases",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]"
-          ],
-          "tags": {
-            "displayName": "sqldatabase"
-          },
-          "sku": {
-            "name": "Basic",
-            "tier": "Basic"
-          },
-          "kind": "v12.0,user",
-          "apiVersion": "2017-03-01-preview",
-          "scale": null,
-          "properties": {
-            "collation": "SQL_Latin1_General_CP1_CI_AS",
-            "maxSizeBytes": 1073741824,
-            "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
-            "zoneRedundant": false
-          }
-
-
-
-        }
+    ]
+}
