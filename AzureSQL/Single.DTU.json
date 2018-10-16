@@ -14,11 +14,6 @@
     },
     "databases_sqldatabase_name": {
       "type": "String"
-    },
-    "Model": {
-      "type": "string",
-      "allowedValues": [ "DTU", "vCore" ],
-      "metadata": { "description": "DTU or vCore" }
     }
   },
   "variables": {
@@ -62,14 +57,23 @@
       "dependsOn": []
     },
     {
+
       "type": "Microsoft.Sql/servers/databases",
-      "sku": "[if(equals(parameters('Model'), 'DTU'), variables('SKU_DTU'), variables('SKU_vCore'))]",
-      "kind": "[if(equals(parameters('Model'), 'DTU'), variables('Kind_DTU'), variables('Kind_vCore'))]",
+      "sku": {
+        "name": "Basic",
+        "tier": "Basic"
+      },
+      "kind": "v12.0,user",
       "name": "[concat(parameters('servers_sqlserverss_name'), '/', parameters('databases_sqldatabase_name'))]",
       "apiVersion": "2017-03-01-preview",
       "location": "[resourceGroup().location]",
       "scale": null,
-      "properties": "[if(equals(parameters('Model'), 'DTU'), variables('Properties_DTU'), variables('Properties_vCore'))]",
+      "properties": {
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "maxSizeBytes": 104857600,
+        "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+        "zoneRedundant": false
+      },
       "dependsOn": [
         "[resourceId('Microsoft.Sql/servers', parameters('servers_sqlserverss_name'))]"
       ]

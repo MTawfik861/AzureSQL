@@ -13,9 +13,6 @@
     },
     "databases_sqldatabase_name": {
       "value": "sqldb"
-    },
-    "Model": {
-      "value": "vCore"
     }
   }
 }
