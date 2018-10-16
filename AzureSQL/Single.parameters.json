@@ -1,23 +1,18 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "sqlserverAdminLogin": {
-      "Value": "mtawfik"
+    "servers_sqlserverss_name": {
+      "value": "sqlserver21321"
     },
-    "sqlserverAdminLoginPassword": {
-      "Value": "Password12345K"
+    "servers_sqlserverss_password": {
+      "value": "Password12345K"
     },
-    "sqldatabaseName": {
-      "Value": "sqldbname",
-      "minLength": 1
+    "servers_sqlserverss_admin": {
+      "value": "mtawfik"
     },
-    "sqldatabaseEdition": {
-     
-      "Value": "Basic"
-    },
-    "sqldatabaseRequestedServiceObjectiveName": {
-      "value": "Basic"
+    "databases_sqldatabase_name": {
+      "value": "sqlserverdb"
     }
 
   }

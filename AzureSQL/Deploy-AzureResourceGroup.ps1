@@ -7,7 +7,7 @@ Param(
     [string] $SubscriptionId = 'd66f13b7-4a33-4d7c-9d5c-f7b2650d5236',
     [string] $TenantId  = '20349a5c-df19-401c-8e6c-bade0c468dd9',
     [string] $ResourceGroupLocation = 'West Europe',
-    [string] $ResourceGroupName = 'AzureSQLResourceGroup',
+    [string] $ResourceGroupName = 'AzureSQLResourceGroup5',
     [string] $TemplateFile_Single = 'Single.json',
 	[string] $TemplateFile_MI = 'MI.json',
 	[string] $TemplateFile_Elastic = 'Elastic.json',
@@ -19,6 +19,7 @@ Param(
  
 Set-Location -Path $Path
 
+
 $ErrorView = "NormalView" 
 $ErrorActionPreference = 'Stop'
 $VerbosePreference="SilentlyContinue"
@@ -28,6 +29,9 @@ $formatenumerationlimit = 20
 
 $Credential = New-Object System.Management.Automation.PSCredential($azureAccountName, $password) 
 Login-AzureRmAccount -Credential $Credential -TenantId $TenantId -SubscriptionId $SubscriptionId -ErrorVariable ErrorMessages
+
+
+
 
 Get-AzureRmResourceGroup -Name $ResourceGroupName -ErrorVariable ErrorMessages -ErrorAction SilentlyContinue 
 
@@ -41,6 +45,11 @@ else
 {
     # ResourceGroup exist
 }
+
+
+
+
+
 
 if ($Solution_Type -eq 'Single')
 {
